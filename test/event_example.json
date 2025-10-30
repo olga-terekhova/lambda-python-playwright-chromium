@@ -1,0 +1,6 @@
+{
+  "Bucket": "test-bucket",
+  "Key": "scripts/user_function.py",
+  "EntryFunction": "main",
+  "Parameters": { "param1": 3, "param2": 5 }
+}
