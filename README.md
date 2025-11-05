@@ -14,10 +14,10 @@ lambda-python-playwright-chromium/
 │  ├─ lambda_function.py (lambda function code)  
 │  ├─ requirements.txt (lists of python libraries to install, playwright and awslambdaric are required for this functionality)    
 │  ├─ start.sh (a switch that determines the environment (local or cloud) and uses an emulator if needed)  
-├─ test/
-│  ├─ event.json (a payload for testing)
-│  ├─ event_example.json (a reference template for event.json)
-│  ├─ user_function_example.py (an example of user submitted python file, should be uploaded to S3)
+├─ test/  
+│  ├─ event.json (a payload for testing)  
+│  ├─ event_example.json (a reference template for event.json)  
+│  ├─ user_function_example.py (an example of user submitted python file, should be uploaded to S3)  
 
 **Project Diagram**  
 
@@ -25,7 +25,7 @@ lambda-python-playwright-chromium/
 <img src="./docs/diagram/src/init-diagram/lambda-init.svg">
   
 
-  
+
   
 <img src="./docs/diagram/src/run-diagram/lambda-run.svg">
 
