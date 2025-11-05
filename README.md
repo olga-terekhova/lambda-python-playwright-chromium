@@ -1,8 +1,8 @@
 # lambda-python-playwright-chromium
 A Docker image that creates a containerized AWS Lambda runtime with Playwright installed as a Python library with all dependencies.  
-Only headless Chromium included, so the image size is only 2GB (as compared to the microsoft-playwright image at 3.5GB).    
-All user logic should be contained in a separate python script uploaded to S3. It will be executed by the default hanlder of this lambda function.  
-Can be tested locally (the same image could be run locally or on AWS).  
+Only headless Chromium included, so the image size is only 2GB.    
+All user logic should be contained in a separate python script uploaded to S3. It will be executed by the default handler of this lambda function.  
+The same image could be run locally or on AWS, which simplifies testing and deployment.  
 
 **Project structure**:  
 
@@ -29,6 +29,13 @@ lambda-python-playwright-chromium/
   
 <img src="./docs/diagram/src/run-diagram/lambda-run.svg">
 
+**Why containerization is needed**
+
+The playwright module requires installation of system libraries. Regular lambda functions can be extended by lambda layers, but the purpose of lambda layer is to store python libraries in the the /opt directory. If a python library requires system dependencies, a lambda layer can't fulfill this requirement.  
+
+Playwright is officially compatible with Ubuntu and Debian only, which makes base AWS images not suitable.  
+This leads to the need to create a custom image which is based on a supported distribution, includes a lambda runtime interface client, and includes all needed python libraries and dependencies. 
+
 **What's useful here compared to other base images and walkthroughs**  
 
 The image is build on a base Ubuntu image.  
@@ -40,4 +47,7 @@ The resulting size of the image is 2 GB.
 This image has a correct start.sh file which build Lambda Runtime emulator into the image and allows the same image be run locally and in the cloud.   
 The [AWS documentation example](https://github.com/aws/aws-lambda-runtime-interface-emulator/?tab=readme-ov-file#build-rie-into-your-base-image) omits passing the parameter into the script, so the AWS runtime emulator doesn't see the lambda module and function handler passed in CMD.  
 
-All user logic is removed into a separate python file, so this container doesn't have to be rebuild every time the end function changes. This container acts a stable runtime which provides python execution capabilities with additional system libraries needed for the playwright module.  
+All user logic is removed into a separate python file, so this container doesn't have to be rebuilt every time the end function changes. This container acts a stable runtime which provides python execution capabilities with additional system libraries needed for the playwright module.  
+
+No additional credentials are needed if the lambda python function does not require access to any AWS resources.  
+If the access to other AWS resources is needed, like S3 bucket, this container should be run with injected credentials that will give needed permissions. A project at https://github.com/olga-terekhova/lambda-local-run implements is an example of such implementation.  
