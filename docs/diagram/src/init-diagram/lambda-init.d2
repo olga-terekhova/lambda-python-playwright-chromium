@@ -88,7 +88,8 @@ AWS Cloud: {
   }
 }
 
-AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS ECR.Lambda playwright image: 1. Based on
-AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS IAM.Lambda playwright role: 2. Gets permissions from
-AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS Lambda.Lambda playwright container: 3. Builds and passes correct role-based permissions into
+AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS ECR.Lambda playwright image: 4. Based on
+AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS IAM.Lambda playwright role: 5. Gets permissions from
+AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS Lambda.Lambda playwright container: 6. Builds and passes correct role-based permissions into
 
+Local.Lambda playwright image -> AWS Cloud.AWS ECR.Lambda playwright image: 3. Pushed to 
