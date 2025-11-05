@@ -1,0 +1,13 @@
+services:
+  d2:
+    image: terrastruct/d2:latest
+    container_name: d2_watch
+    volumes: 
+      - ./src:/home/debian/src
+    working_dir: /home/debian/src
+    ports:
+      - "127.0.0.1:8080:8080"
+    entrypoint: ./entrypoint_render.sh
+    stdin_open: true
+    tty: true
+    restart: "no"

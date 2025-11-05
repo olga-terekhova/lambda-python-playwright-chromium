@@ -1,0 +1,97 @@
+vars: {
+  d2-config: {
+    theme-overrides: {
+      B1: "#000000"
+      B2: "#000000"
+      B3: "#ffffff"
+      B4: "#ffffff"
+      B5: "#ffffff"
+      B6: "#ffffff"
+
+      AA2: "#0D47A1"
+      AA4: "#42A5F5"
+      AA5: "#90CAF9"
+
+      AB4: "#F44336"
+      AB5: "#FFCDD2"
+    }
+  }
+}
+
+title: {
+  label: Running of the containerized Lambda function calling a user function
+  near: top-center
+  shape: text
+  style.font-size: 40
+}
+
+Local: {
+  Lambda playwright container: {
+    label.near: top-center
+    icon: docker-svgrepo-com.svg
+    icon.near: top-left
+    style.fill: "#e2f7ec"
+
+    start script
+    playwright libraries
+    aws-lambda-rie
+    playwright python module
+    Lambda python module  {width: 400}
+  }
+}
+
+Local.Lambda playwright container.start script -> Local.Lambda playwright container.aws-lambda-rie : 1. Detects local environment and calls emulator
+Local.Lambda playwright container.aws-lambda-rie -> Local.Lambda playwright container.Lambda python module : 2. Calls lambda module
+Local.Lambda playwright container.Lambda python module -> Local.Lambda playwright container.playwright python module : 3. Imports from the module
+Local.Lambda playwright container.playwright python module -> Local.Lambda playwright container.playwright libraries : 4. Uses the libraries
+
+AWS: {
+  AWS Lambda: {
+    label.near: top-center
+    icon: aws-lambda.svg
+    icon.near: top-left
+
+    Lambda playwright container: {
+      label.near: top-center
+      icon: docker-svgrepo-com.svg
+      icon.near: top-left
+      style.fill: "#e2f7ec"
+
+      start script
+      playwright libraries
+      aws-lambda-rie
+      playwright python module
+      Lambda python module {width: 400}
+    }
+  }
+
+  AWS S3: {
+    label.near: top-center
+    icon: aws-s3.svg
+    icon.near: top-left
+
+    Lambda playwright bucket: {
+      label.near: top-center
+      Lambda playwright user function
+    }
+  }
+}
+
+AWS.AWS Lambda.Lambda playwright container.start script -> AWS.AWS Lambda.Lambda playwright container.Lambda python module : 1. Detects cloud environment and calls lambda module
+AWS.AWS Lambda.Lambda playwright container.Lambda python module -> AWS.AWS Lambda.Lambda playwright container.playwright python module : 2. Imports from the module
+AWS.AWS Lambda.Lambda playwright container.playwright python module -> AWS.AWS Lambda.Lambda playwright container.playwright libraries : 3. Uses the libraries
+
+AWS.AWS Lambda.Lambda playwright container.Lambda python module -> AWS.AWS S3.Lambda playwright bucket.Lambda playwright user function : 4. Requests user function and executes it in the container {
+  style.opacity: 0.0
+}
+
+Local.Lambda playwright container.Lambda python module -> AWS.AWS S3.Lambda playwright bucket.Lambda playwright user function : 5. Requests user function and executes it in the container {
+  style.opacity: 0.0
+}
+
+scenarios: {
+  1-call : {
+    (AWS.AWS Lambda.Lambda playwright container.Lambda python module -> AWS.AWS S3.Lambda playwright bucket.Lambda playwright user function)[0].style.opacity: 1.0
+    (Local.Lambda playwright container.Lambda python module -> AWS.AWS S3.Lambda playwright bucket.Lambda playwright user function)[0].style.opacity: 1.0
+  }
+}

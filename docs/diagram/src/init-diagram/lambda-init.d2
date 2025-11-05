@@ -1,0 +1,94 @@
+vars: {
+  d2-config: {
+    theme-overrides: {
+      B1: "#000000"
+      B2: "#000000"
+      B3: "#ffffff"
+      B4: "#ffffff"
+      B5: "#ffffff"
+      B6: "#ffffff"
+
+      AA2: "#0D47A1"
+      AA4: "#42A5F5"
+      AA5: "#90CAF9"
+
+      AB4: "#F44336"
+      AB5: "#FFCDD2"
+    }
+  }
+}
+
+title: {
+  label: Initiation of the containerized Lambda function
+  near: top-center
+  shape: text
+  style.font-size: 40
+}
+
+Local: {
+  Lambda playwright image: {
+    label.near: top-center
+    icon: docker-svgrepo-com.svg
+    icon.near: top-left
+    width: 350
+    }
+  Lambda playwright container: {
+    label.near: top-center
+    icon: docker-svgrepo-com.svg
+    icon.near: top-left
+    width: 350
+    style.fill: "#e2f7ec"
+    }
+  Local orchestrator {
+    label.near: top-center
+    icon: powershell-svgrepo-com.svg
+    icon.near: top-left
+    width: 300
+    }
+}
+
+Local.Local orchestrator -> Local.Lambda playwright image: 1. Uses to run container
+Local.Local orchestrator -> Local.Lambda playwright container: 2. Runs and injects credentials with a custom script if needed
+
+AWS Cloud: {
+  AWS ECR: {
+    label.near: top-center
+    icon: aws-ecr.svg
+    icon.near: top-left
+
+    Lambda playwright image: {
+        label.near: top-center
+        icon: docker-svgrepo-com.svg
+        icon.near: top-left
+        width: 350
+    }
+  }
+
+  AWS Lambda: {
+    label.near: top-center
+    icon: aws-lambda.svg
+    icon.near: top-left
+
+    Lambda playwright function: {}
+    Lambda playwright container: {
+        label.near: top-center
+        icon: docker-svgrepo-com.svg
+        icon.near: top-left
+        width: 350
+        style.fill: "#e2f7ec"
+    }
+  }
+
+  AWS IAM: {
+    label.near: top-center
+    icon: aws-iam.svg
+    icon.near: top-left
+
+    Lambda playwright role: {}
+  }
+}
+
+AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS ECR.Lambda playwright image: 1. Based on
+AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS IAM.Lambda playwright role: 2. Gets permissions from
+AWS Cloud.AWS Lambda.Lambda playwright function -> AWS Cloud.AWS Lambda.Lambda playwright container: 3. Builds and passes correct role-based permissions into
+

@@ -19,6 +19,15 @@ lambda-python-playwright-chromium/
 │  ├─ event_example.json (a reference template for event.json)
 │  ├─ user_function_example.py (an example of user submitted python file, should be uploaded to S3)
 
+**Project Diagram**  
+
+  
+<img src="./docs/diagram/src/init-diagram/lambda-init.svg">
+  
+
+  
+  
+<img src="./docs/diagram/src/run-diagram/lambda-run.svg">
 
 **What's useful here compared to other base images and walkthroughs**  
 
