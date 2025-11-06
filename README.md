@@ -16,8 +16,10 @@ lambda-python-playwright-chromium/
 │  ├─ start.sh (a switch that determines the environment (local or cloud) and uses an emulator if needed)  
 ├─ test/  
 │  ├─ event.json (a payload for testing)  
-│  ├─ event_example.json (a reference template for event.json)  
-│  ├─ user_function_example.py (an example of user submitted python file, should be uploaded to S3)  
+│  ├─ event_example.json (a reference template for event.json calling user_function_example.py)  
+│  ├─ event_open_site_example.json (a reference template for event.json calling user_function_open_site_example.py)  
+│  ├─ user_function_example.py (a minimal example of user submitted python file, should be uploaded to S3)   
+│  ├─ user_function_open_site_example.py (an example of user code that uses Playwright, should be uploaded to S3)  
 
 **Project Diagram**  
 

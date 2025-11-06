@@ -14,6 +14,12 @@ COPY ${FUNCTION_SRC} ${FUNCTION_DIR}
 # Set directory on the image to contain Python virtual environment
 ARG VIRTUAL_PATH="/project/venv"
 
+# Set environment variable path to browser binaries
+ENV PLAYWRIGHT_BROWSERS_PATH='/project/browsers'
+
+# Set HOME path to the only writeable location
+ENV HOME="/tmp"
+
 # Set PIP to use no cache to control image size
 ENV PIP_NO_CACHE_DIR=1
 

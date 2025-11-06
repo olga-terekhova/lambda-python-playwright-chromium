@@ -1,0 +1,6 @@
+{
+  "Bucket": "test-bucket",
+  "Key": "scripts/user_function_open_site_example.py",
+  "EntryFunction": "OpenSite",
+  "Parameters": {  }
+}
