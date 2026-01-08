@@ -42,9 +42,20 @@ def OpenSite():
     from playwright.sync_api import sync_playwright
 
     with sync_playwright() as p:
+        # user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
         browser = p.chromium.launch(headless=True, 
+        #                            user_agent=user_agent,
                                     args= get_chromium_on_aws_lambda_flags() )  # Launch Chromium browser. Arguments are important for running within AWS Lambda. 
-        page = browser.new_page()       # Create a new page (tab)
+        
+        # Desktop Chrome device settings
+        desktop_chrome = p.devices["Desktop Chrome"]
+
+        # Create browser context with Desktop Chrome emulation
+        context = browser.new_context(
+            **desktop_chrome
+        )
+        
+        page = context.new_page()       # Create a new page (tab)
         page.goto("https://www.example.com") # Navigate to a URL
         str = page.title()              # Print the page title
         browser.close()                 # Close the browser
