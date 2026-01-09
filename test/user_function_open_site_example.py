@@ -1,5 +1,6 @@
 import traceback
 import boto3
+import datetime
 
 def get_chromium_on_aws_lambda_flags():
     return [
@@ -45,7 +46,9 @@ def OpenSite(ID, URL, bucket, output_dir):
     
     from playwright.sync_api import sync_playwright
 
-    key_dir = output_dir + "/" + ID + "/"
+    timestamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d_%H%M%S")
+
+    key_dir = output_dir + "/" + ID + "/" + timestamp + "/"
     screenshot_key = key_dir +"screenshot.png"
     page_key = key_dir + "page.html"
     s3 = boto3.client("s3")
@@ -112,7 +115,7 @@ def OpenSite(ID, URL, bucket, output_dir):
                 ContentType="text/html; charset=utf-8"
             )
 
-            str = f"Success: The screenshot and the DOM-tree for {page.title()} were put in {key_dir}"               # Print the page title
+            str = f"{timestamp} Success: The screenshot and the DOM-tree for {page.title()} were put in {key_dir}"               # Print the page title
             browser.close()                 # Close the browser
     
     except Exception as e:
