@@ -2,5 +2,5 @@
   "Bucket": "test-bucket",
   "Key": "scripts/user_function_open_site_example.py",
   "EntryFunction": "OpenSite",
-  "Parameters": {  }
+  "Parameters": {  "ID": "example", "URL": "https://example.com/" , "bucket": "test-bucket", "output_dir": "output"  }
 }
